@@ -26,9 +26,9 @@ public class RecordsTable implements BaseColumns {
     // info for content provider
     public static final String CONTENT_PATH = "records";
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-            + "/vnd.mastermind.records";
+            + "/vnd.testprovider.records";
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-            + "/vnd.mastermind.records";
+            + "/vnd.testprovider.records";
 
     public static final String[] PROJECTION_ALL = { _ID, LABEL, DESCRIPTION};
 

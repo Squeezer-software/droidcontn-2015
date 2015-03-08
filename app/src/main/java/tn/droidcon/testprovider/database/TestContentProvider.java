@@ -31,13 +31,13 @@ public class TestContentProvider extends ContentProvider {
         private static final int RECORDS_ALL = 10;
         private static final int RECORD_ID = 11;
 
-        private static final UriMatcher MASTERMIND_URI_MATCHER;
+        private static final UriMatcher TEST_PROVIDER_URI_MATCHER;
 
         static {
-            MASTERMIND_URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-            MASTERMIND_URI_MATCHER.addURI(AUTHORITY, RecordsTable.CONTENT_PATH,
+            TEST_PROVIDER_URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+            TEST_PROVIDER_URI_MATCHER.addURI(AUTHORITY, RecordsTable.CONTENT_PATH,
                     RECORDS_ALL);
-            MASTERMIND_URI_MATCHER.addURI(AUTHORITY, RecordsTable.CONTENT_PATH
+            TEST_PROVIDER_URI_MATCHER.addURI(AUTHORITY, RecordsTable.CONTENT_PATH
                     + "/#", RECORD_ID);
         }
 
@@ -46,7 +46,7 @@ public class TestContentProvider extends ContentProvider {
             SQLiteDatabase sqlDB = mOpenHelper.getWritableDatabase();
             int rowsDeleted = 0;
             String id;
-            switch (MASTERMIND_URI_MATCHER.match(uri)) {
+            switch (TEST_PROVIDER_URI_MATCHER.match(uri)) {
                 case RECORDS_ALL:
                     rowsDeleted = sqlDB.delete(RecordsTable.TABLE_RECORDS, selection,
                             selectionArgs);
@@ -71,7 +71,7 @@ public class TestContentProvider extends ContentProvider {
 
         @Override
         public String getType(Uri uri) {
-            switch (MASTERMIND_URI_MATCHER.match(uri)) {
+            switch (TEST_PROVIDER_URI_MATCHER.match(uri)) {
                 case RECORDS_ALL:
                     return RecordsTable.CONTENT_TYPE;
                 case RECORD_ID:
@@ -90,7 +90,7 @@ public class TestContentProvider extends ContentProvider {
 
 
 
-            switch (MASTERMIND_URI_MATCHER.match(uri)) {
+            switch (TEST_PROVIDER_URI_MATCHER.match(uri)) {
                 case RECORDS_ALL:
 
                     id = database.insert(RecordsTable.TABLE_RECORDS, null, values);
@@ -123,7 +123,7 @@ public class TestContentProvider extends ContentProvider {
             // Using SQLiteQueryBuilder instead of query() method
             SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-            switch (MASTERMIND_URI_MATCHER.match(uri)) {
+            switch (TEST_PROVIDER_URI_MATCHER.match(uri)) {
                 case RECORDS_ALL:
                     // Check if the caller has requested a column which does not
                     // exists
@@ -160,7 +160,7 @@ public class TestContentProvider extends ContentProvider {
             SQLiteDatabase database = mOpenHelper.getWritableDatabase();
             int rowsUpdated = 0;
             String id;
-            switch (MASTERMIND_URI_MATCHER.match(uri)) {
+            switch (TEST_PROVIDER_URI_MATCHER.match(uri)) {
                 case RECORD_ID:
 
                     id = uri.getLastPathSegment();
@@ -180,11 +180,6 @@ public class TestContentProvider extends ContentProvider {
             return rowsUpdated;
         }
 
-        /**
-         * check if an unavailable column is requested for mastermind records
-         *
-         * @param projection
-         */
         private void checkRecordsTableColumns(String[] projection) {
 
             if (projection != null) {
@@ -199,11 +194,4 @@ public class TestContentProvider extends ContentProvider {
                 }
             }
         }
-
-
-
-
-
-
-
 }

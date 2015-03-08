@@ -84,7 +84,6 @@ public class CustomAdapter extends
 
         public void onItemClicked(int position);
 
-
     }
 
 }
