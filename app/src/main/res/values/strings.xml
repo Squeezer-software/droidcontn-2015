@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Test Content Provider</string>
+
+    <string name="action_add">Add</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="add_dialog_title">Add a record</string>
+    <string name="add_dialog_label_hint">Record label</string>
+    <string name="add_dialog_description_hint">Record description</string>
+</resources>
