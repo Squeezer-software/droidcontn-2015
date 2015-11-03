@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import tn.droidcon.testprovider.database.tables.ListsTable;
 import tn.droidcon.testprovider.database.tables.RecordsTable;
 
 
@@ -40,6 +41,7 @@ public class TestDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         RecordsTable.onCreate(db);
+        ListsTable.onCreate(db);
     }
 
     @Override
@@ -53,6 +55,7 @@ public class TestDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         RecordsTable.onUpgrade(db, oldVersion, newVersion);
+        ListsTable.onUpgrade(db, oldVersion, newVersion);
     }
 
 }

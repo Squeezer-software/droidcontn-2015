@@ -2,15 +2,12 @@ package tn.droidcon.testprovider.database.tables;
 
 import android.content.ContentResolver;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.provider.BaseColumns;
 
-import tn.droidcon.testprovider.database.TestContentProvider;
-
-public class RecordsTable implements BaseColumns {
+public class ListsTable implements BaseColumns {
 
     // Records database table
-    public static final String TABLE_RECORDS = "records";
+    public static final String TABLE_LISTS = "lists";
 
     // table records fields
     public static final String LABEL = "title";
@@ -19,19 +16,19 @@ public class RecordsTable implements BaseColumns {
 
 
     // records table creation statement
-    private static final String CREATE_RECORDS_TABLE = "CREATE TABLE "
-            + TABLE_RECORDS + " (" + _ID
+    private static final String CREATE_LISTS_TABLE = "CREATE TABLE "
+            + TABLE_LISTS + " (" + _ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + LABEL
             + " TEXT NOT NULL, " +  DESCRIPTION
             + " TEXT); " ;
 
 
     // info for content provider
-    public static final String CONTENT_PATH = "records";
+    public static final String CONTENT_PATH = "lists";
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-            + "/vnd.testprovider.records";
+            + "/vnd.testprovider.lists";
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-            + "/vnd.testprovider.records";
+            + "/vnd.testprovider.lists";
 
     public static final String[] PROJECTION_ALL = { _ID, LABEL, DESCRIPTION};
 
@@ -41,7 +38,7 @@ public class RecordsTable implements BaseColumns {
      * @param database
      */
     public static void onCreate(SQLiteDatabase database) {
-        database.execSQL(CREATE_RECORDS_TABLE);
+        database.execSQL(CREATE_LISTS_TABLE);
     }
 
     /**
@@ -54,7 +51,7 @@ public class RecordsTable implements BaseColumns {
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
             int newVersion) {
         // TODO
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_RECORDS);
+        database.execSQL("DROP TABLE IF EXISTS " + TABLE_LISTS);
         onCreate(database);
     }
 }
