@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class ListItemWrapper implements Serializable {
 
+
     private long mId;
     private String mTitle;
     private String mDescription;

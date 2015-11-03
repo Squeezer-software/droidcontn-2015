@@ -27,7 +27,7 @@ import tn.droidcon.testprovider.ui.AddDialog;
 import tn.droidcon.testprovider.wrapper.ListItemWrapper;
 
 
-public class MainFragment extends Fragment implements AddDialog.OnAddListener, LoaderManager.LoaderCallbacks<Cursor>,CustomAdapter.OnItemClickedListener {
+public class MainFragment extends Fragment implements AddDialog.OnAddListener, LoaderManager.LoaderCallbacks<Cursor>, CustomAdapter.OnItemClickedListener {
 
 
     private static final String LIST_CONTENT_KEY = "list_content_key";
@@ -98,7 +98,7 @@ public class MainFragment extends Fragment implements AddDialog.OnAddListener, L
 
     @Override
     public void onOkClicked(ListItemWrapper listItemWrapper) {
-        Log.v("slim", "catch ok button click :" + listItemWrapper.getTitle());
+
         mObjectList.add(listItemWrapper);
         mAdapter.notifyDataSetChanged();
         ContentValues contentValues = new ContentValues();
@@ -108,6 +108,7 @@ public class MainFragment extends Fragment implements AddDialog.OnAddListener, L
         Uri uri = getActivity().getContentResolver().insert(
                 TestContentProvider.RECORDS_CONTENT_URI,
                 contentValues);
+
         listItemWrapper.setId(Long.valueOf(uri.getLastPathSegment()));
     }
 
@@ -151,6 +152,7 @@ public class MainFragment extends Fragment implements AddDialog.OnAddListener, L
 
         ListItemWrapper listItemWrapper = new ListItemWrapper();
 
+        listItemWrapper.setId(data.getLong(data.getColumnIndex(RecordsTable._ID)));
         listItemWrapper.setTitle(data.getString(data.getColumnIndex(RecordsTable.LABEL)));
         listItemWrapper.setDescription(data.getString(data.getColumnIndex(RecordsTable.DESCRIPTION)));
 
@@ -160,12 +162,27 @@ public class MainFragment extends Fragment implements AddDialog.OnAddListener, L
     @Override
     public void onItemClicked(int position) {
         //delete the clicked item
+
+
+        Log.v("slim", "mObjectList removed item position = "+position);
+        Log.v("slim", "mObjectList removed item id = "+mObjectList.get(position).getId());
+        Log.v("slim", "mObjectList removed item title = "+mObjectList.get(position).getTitle());
+
         getActivity().getContentResolver().delete(
-       ContentUris.withAppendedId(
-               TestContentProvider.RECORDS_CONTENT_URI, mObjectList.get(position).getId()),
-        null, null);
+                ContentUris.withAppendedId(
+                        TestContentProvider.RECORDS_CONTENT_URI, mObjectList.get(position).getId()),
+                null, null);
 
         mObjectList.remove(position);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemRemoved(position);
+
+
+        Log.v("slim", "delete performed");
+        for(ListItemWrapper listItemWrapper : mObjectList){
+            Log.v("slim", "mObjectList item id = "+listItemWrapper.getId());
+            Log.v("slim", "mObjectList item title = "+listItemWrapper.getTitle());
+            Log.v("slim", "-----------------------");
+        }
+
     }
 }

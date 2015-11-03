@@ -37,6 +37,7 @@ public class CustomAdapter extends
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.v("slim", "Adapter:onCreateViewHolder called");
         // create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.card_item_layout, parent, false);
@@ -48,9 +49,8 @@ public class CustomAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.mPosition = position;
+
+        holder.mItemWrapper = mObjectsList.get(position);
         holder.mItemTitle.setText(mObjectsList.get(position).getTitle());
         holder.mItemDescription.setText(mObjectsList.get(position).getDescription());
         holder.itemView.setOnClickListener(this);
@@ -58,15 +58,17 @@ public class CustomAdapter extends
 
     }
 
+
     @Override
     public void onClick(View v) {
-        mItemClickedListener.onItemClicked(((ViewHolder)v.getTag()).mPosition);
+        Log.v("slim", "Position clicked = "+mObjectsList.indexOf(((ViewHolder)v.getTag()).mItemWrapper));
+        mItemClickedListener.onItemClicked(mObjectsList.indexOf(((ViewHolder)v.getTag()).mItemWrapper));
     }
 
     // Provide a reference to the views for each data item
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public int mPosition;
+        public ListItemWrapper mItemWrapper;
         public TextView mItemTitle;
         public TextView mItemDescription;
 
